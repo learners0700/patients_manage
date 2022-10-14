@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/static/image/icon.png">
+
+    <title>药品管理</title>
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/index_1/bootstrap.min.css" rel="stylesheet">
+    <style>
+        table tbody {
+            display: block;
+            height: 800px;
+            overflow-y: scroll;
+        }
+
+        table thead, tbody tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        table thead {
+            width: calc(100% - 1.6em)
+        }
+
+        /*table thead th {*/
+        /*    background: #ccc;*/
+        /*}*/
+
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">牙医诊所管理系统</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" style="font-weight: bolder" href="#">牙医诊所管理系统</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                {% if "username" not in session %}
+                <li><a href="/login">登录</a></li>
+                {% else %}
+                <li style="text-align: center;color: #da9628;padding: 15px 0 15px 15px">欢迎{{ session['username']
+                    }}用户登录！
+                </li>
+
+                <li><a href="/logout">退出</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div style="background-color: #b3b7bb;height: 1100px;width: 150px; " class="col-sm-3 col-md-2 sidebar">
+            <ul style="padding-top: 55px" class="nav nav-sidebar">
+                <li><a style="font-weight: bolder" href="/index">首页</a></li>
+                <li><a style="font-weight: bolder" href="/select_doctors">医生管理</a></li>
+                <li><a style="font-weight: bolder" href="/select_patients">患者管理</a></li>
+                <li><a style="font-weight: bolder" href="/select_drug">药品管理</a></li>
+                <li><a style="font-weight: bolder" href="/select_report">账单管理</a></li>
+                <li><a style="font-weight: bolder" href="/select_members">会员管理</a></li>
+                <li><a style="font-weight: bolder" href="#">待定</a></li>
+            </ul>
+        </div>
+        <div style="width: 1747px;height: 1100px;margin-left: 0; padding-top: 50px;background-image: url(/static/image/beiji.png)"
+             class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <!--          <h2 class="sub-header">Section title</h2>-->
+            <div>
+                <form style="padding-top: 10px; text-align: center" action="" method="post">
+                    <label>
+                        <input style="height: 30px" type="text" name="pname" placeholder="输入药品名称"/>
+                        <input type="submit" style="height: 30px" value="查询" href="/select_drug">
+                        <a href="/select_drug" style="margin-left: 20px;color: #0e90d2">查询全部</a>
+                        <a href="/add_drug" style="margin-left: 30px;color: #0e90d2">增加药品</a>
+                    </label>
+                </form>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <td style="border: 1px solid #333333;padding: 10px;width: 87px;text-align: center;background-color: #27a9e3">
+                            药品编号
+                        </td>
+                        <td style="border: 1px solid #333333;padding: 10px;width: 87px;text-align: center;background-color: #27a9e3">
+                            药品名称
+                        </td>
+                        <td style="border: 1px solid #333333;padding: 10px;width: 87px;text-align: center;background-color: #27a9e3">
+                            药品用途
+                        </td>
+                        <td style="border: 1px solid #333333;padding: 10px;width: 87px;text-align: center;background-color: #27a9e3">
+                            药品价格
+                        </td>
+                        <td style="border: 1px solid #333333;padding: 10px;width: 87px;text-align: center;background-color: #27a9e3">
+                            药品库存
+                        </td>
+                        <td style="border: 1px solid #333333;padding: 10px;width: 87px;text-align: center;background-color: #27a9e3">
+                            操作类型
+                        </td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for items in drug_list %}
+                    <tr>
+                        {% for item in items %}
+                        <td style="border: 1px solid #333333;padding: 10px;width: 87px;text-align: center;background-color: #64909E">
+                            {{ item }}
+                        </td>
+                        {% endfor %}
+                        <td style="border: 1px solid #333333;padding: 10px;width: 87px;text-align: center;background-color: #64909E">
+                            <a style="color: blue;" href="/update_drug/{{ items }}">修改</a>
+                            <a style="color: blue; padding-left: 8px" href="/delete_drug/{{ items }}">删除</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <div style="text-align: center">
+                    <ul style="margin: 0" class="pagination">
+                        <li><a href="/select_drug?page={{ last_page }}">上一页</a></li>
+                        {% for page in num_list %}
+                        <li><a href="/select_drug?page={{ page }}">{{ page }}</a></li>
+                        {% endfor %}
+                        <li><a href="/select_drug?page={{ next_page }}">下一页</a></li>
+                    </ul>
+                    <div style="font-size: 15px;color: #939da8;text-align: center">
+                        <caption>当前为第{{ page }}页&#12288;共{{total_num}}页
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/static/js/index_1/jquery.min.js"></script>
+<script src="/static/js/index_1/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        div {
+            margin: 0;
+            padding: 0;
+        }
+
+        .astyle {
+            background-color: #fff;
+            padding: 0 16px;
+            border: 1px solid #ddd;
+            display: inline-block;
+            height: 36px;
+            line-height: 36px;
+            margin: 0 4px 5px 5px;
+            font-size: 14px;
+            border-radius: 3px;
+            left: 50px;
+        }
+
+        a link {
+            color: black;
+            text-decoration: none;
+        }
+    </style>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/3.3.7/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="/css/matrix-style.css"/>
+    <link rel="stylesheet" href="/css/matrix-media.css"/>
+    <title>药品管理</title>
+</head>
+<body>
+<!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+<script src="/js/jquery.min.js"></script>
+<!-- 包括所有已编译的插件 -->
+<script src="/js/bootstrap.min.js"></script>
+<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-dark bg-dark" style="padding-bottom: 0;">
+    <h2 style="padding: 3px; color: #27a9e3">牙医诊所管理系统</h2>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto"></ul>
+        {% if "username" not in session %}
+        <a class="nav-link" href="/login">登录</a>
+        {% else %}
+        <ul class="navbar-nav mr-auto">
+            <h3>欢迎{{ session['username'] }}用户登录！</h3>
+        </ul>
+        <a class="nav-link" style="text-align: right; font-size: 18px" href="/logout">退出</a>
+        {% endif %}
+    </div>
+</nav>
+<div id="sidebar">
+    <ul>
+        <li style="height: 15px"></li>
+        <li class="active">
+            <a href="/index"><i class="icon icon-home"></i> <span>首页</span></a>
+        </li>
+        <li>
+            <a href="/select_doctors"><i class="icon icon-fullscreen"></i> <span>医生管理</span></a>
+        </li>
+        <li>
+            <a href="/select_patients"><i class="icon icon-th-list"></i> <span></span>患者管理</a>
+        </li>
+        <li>
+            <a href="/select_drug"><i class="icon icon-pencil"></i> <span>药品管理</span></a>
+        </li>
+        <li>
+            <a href="/select_report"><i class="icon icon-pencil"></i> <span>账单管理</span></a>
+        </li>
+        <li>
+            <a href="/select_members"><i class="icon icon-pencil"></i> <span>会员管理</span></a>
+        </li>
+        <li>
+            <a href="/graduation"><i class="icon icon-pencil"></i> <span>待定</span></a>
+        </li>
+
+
+    </ul>
+</div>
+<div id="content">
+    <!--Action boxes-->
+    <div class="container-fluid" style="padding: 0;">
+        <div class="quick-actions_homepage"
+             style="margin: 0; height: 1800px;background-image: url(/image/beiji.png)">
+            <form action="" method="post">
+                <label>
+                    <input style="height: 30px" type="text" name="dname" placeholder="输入药品名称"/>
+                    <input type="submit" style="height: 30px" value="查询" href="/grade">
+                    <a href="/select_drug" style="margin-left: 20px;color: #0e90d2">查询全部</a>
+                    <a href="/add_drug" style="margin-left: 30px;color: #0e90d2">增加药品</a>
+                </label>
+            </form>
+            <table class="tablex"
+                   style="width: 80%;margin-left: 88px;background:#9fcdff; border: 1px solid #ccc;padding: 10px;border-collapse: collapse">
+
+                </caption>
+                <tr>
+                    <td style="border: 1px solid #333333;padding: 10px;width: 87px;text-align: center;background-color: #90111A ">
+                        药品编号
+                    </td>
+                    <td style="border: 1px solid #333333;padding: 10px;width: 87px;text-align: center;background-color: #90111A">
+                        药品名称
+                    </td>
+                    <td style="border: 1px solid #333333;padding: 10px;width: 87px;text-align: center;background-color: #90111A">
+                        药品用途
+                    </td>
+                    <td style="border: 1px solid #333333;padding: 10px;width: 87px;text-align: center;background-color: #90111A">
+                        药品价格
+                    </td>
+                    <td style="border: 1px solid #333333;padding: 10px;width: 87px;text-align: center;background-color: #90111A">
+                        操作类型
+                    </td>
+                </tr>
+                {% for items in drug_list %}
+                <tr>
+                    {% for item in items %}
+                    <td style="border: 1px solid #333333;padding: 10px;width: 87px;text-align: center">{{ item }}</td>
+                    {% endfor %}
+                    <td style="border: 1px solid #333333;padding: 10px;width: 87px;text-align: center"><a
+                            href="/update_drug/{{ items }}">修改</a></td>
+                </tr>
+                {% endfor %}
+<!--                <caption style="color: red;text-align: right;font-size: 20px">当前为第{{ page1 }}页&#12288;共{{total_num}}页-->
+            </table>
+
+                        <div>
+                            <ul class="pagination">
+                                <li><a href="/select_drug?page={{ last_page }}">上一页</a></li>
+                                {% for page in num_list %}
+                                <li><a href="/select_drug?page={{ page }}">{{ page }}</a></li>
+                                {% endfor %}
+                                <li><a href="/select_drug?page={{ next_page }}">下一页</a></li>
+                            </ul>
+                            <div style="font-size: 15px;color: #939da8">
+                                <caption>当前为第{{ page }}页&#12288;共{{total_num}}页
+                            </div>
+
+                        </div>
+        </div>
+
+        <hr/>
+    </div>
+</div>
+
+</body>
+</html>

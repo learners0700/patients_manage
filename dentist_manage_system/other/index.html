@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        div {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-responsive.min.css"/>
+
+    <link rel="stylesheet" href="/css/matrix-style.css"/>
+    <link rel="stylesheet" href="/css/matrix-media.css"/>
+    <title>牙医诊所管理系统</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-dark bg-dark" style="padding-bottom: 0;">
+    <h2 style="padding: 3px; color: #27a9e3">牙医诊所管理系统</h2>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto"></ul>
+        {% if "username" not in session %}
+        <a class="nav-link" href="/login">登录</a>
+        {% else %}
+        <ul class="navbar-nav mr-auto">
+            <h3>欢迎{{ session['username'] }}用户登录！</h3>
+            </ul>
+        <a class="nav-link" href="/logout">退出</a>
+        {% endif %}
+    </div>
+</nav>
+<div id="sidebar">
+    <ul>
+        <li style="height: 15px"></li>
+        <li class="active">
+            <a href="/index"><i class="icon icon-home"></i> <span>首页</span></a>
+        </li>
+        <li>
+            <a href="/select_doctors"><i class="icon icon-fullscreen"></i> <span>医生管理</span></a>
+        </li>
+        <li>
+            <a href="/select_patients"><i class="icon icon-th-list"></i> <span></span>患者管理</a>
+        </li>
+        <li>
+            <a href="/select_drug"><i class="icon icon-pencil"></i> <span>药品管理</span></a>
+        </li>
+        <li>
+            <a href="/select_report"><i class="icon icon-pencil"></i> <span>账单管理</span></a>
+        </li>
+        <li>
+            <a href="/select_members"><i class="icon icon-pencil"></i> <span>会员管理</span></a>
+        </li>
+        <li>
+            <a href="/graduation"><i class="icon icon-pencil"></i> <span>待定</span></a>
+        </li>
+
+
+    </ul>
+</div>
+<div id="content">
+    <!--Action boxes-->
+    <div class="container-fluid" style="padding: 0;">
+        <div class="quick-actions_homepage" style="margin: 0; height: 1800px;background-image: url(/image/beiji.png)">
+            <ul class="quick-actions">
+                <li class="bg_lg span3">
+                    <a href="/charts"> <i class="icon-signal"></i>添加医生</a>
+                </li>
+                <li class="bg_ly">
+                    <a href="/select-course"> <i class="icon-inbox"></i><span class="label label-success">101</span>
+                        学生选课情况 </a>
+                </li>
+                <li class="bg_lo">
+                    <a href="/student-datas"> <i class="icon-th"></i> 学生个人信息</a>
+                </li>
+                <li class="bg_ls">
+                    <a href="/grade"> <i class="icon-fullscreen"></i>学生成绩录入及查询</a>
+                </li>
+                <li class="bg_lo span3">
+                    <a href="/reward"> <i class="icon-th-list"></i>奖惩情况</a>
+                </li>
+                <li class="bg_lb">
+                    <a href="/graduation"> <i class="icon-pencil"></i>已毕业学生去向</a>
+                </li>
+                <li class="bg_lg">
+                    <a href="/calendar"> <i class="icon-calendar"></i> 日历</a>
+                </li>
+                <li class="bg_lr">
+                    <a href="/login"> <i class="icon-info-sign"></i>退出系统</a>
+                </li>
+
+            </ul>
+        </div>
+
+        <hr/>
+
+    </div>
+</div>
+
+
+</body>
+</html>

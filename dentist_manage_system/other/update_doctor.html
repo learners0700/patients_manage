@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        div {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-responsive.min.css"/>
+
+    <link rel="stylesheet" href="/css/matrix-style.css"/>
+    <link rel="stylesheet" href="/css/matrix-media.css"/>
+    <title>修改医生信息</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-dark bg-dark" style="padding-bottom: 0;">
+    <h2 style="padding: 3px; color: #27a9e3">牙医诊所管理系统</h2>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto"></ul>
+        {% if "username" not in session %}
+        <a class="nav-link" href="/login">登录</a>
+        {% else %}
+        <ul class="navbar-nav mr-auto">
+            <h3>欢迎{{ session['username'] }}用户登录！</h3>
+        </ul>
+        <a class="nav-link" href="/logout">退出</a>
+        {% endif %}
+    </div>
+</nav>
+<div id="sidebar">
+        <ul>
+        <li style="height: 15px"></li>
+        <li class="active">
+            <a href="/index"><i class="icon icon-home"></i> <span>首页</span></a>
+        </li>
+        <li>
+            <a href="/select_doctors"><i class="icon icon-fullscreen"></i> <span>医生管理</span></a>
+        </li>
+        <li>
+            <a href="/select_patients"><i class="icon icon-th-list"></i> <span></span>患者管理</a>
+        </li>
+        <li>
+            <a href="/select_drug"><i class="icon icon-pencil"></i> <span>药品管理</span></a>
+        </li>
+        <li>
+            <a href="/select_report"><i class="icon icon-pencil"></i> <span>账单管理</span></a>
+        </li>
+        <li>
+            <a href="/select_members"><i class="icon icon-pencil"></i> <span>会员管理</span></a>
+        </li>
+        <li>
+            <a href="/graduation"><i class="icon icon-pencil"></i> <span>待定</span></a>
+        </li>
+
+
+    </ul>
+</div>
+<div id="content">
+    <div style="margin: 0; height: 1800px;background-image: url(/image/beiji.png)">
+        <form action="" method="post">
+            <table style="width:685px;margin-left: 120px;background:lightpink;">
+                <caption>修改医生信息(医生编号不可修改)</caption>
+                <tr>
+                    <td style="width: 110px;text-align: center">医生编号</td>
+                    <td style="width: 110px;text-align: center">医生姓名</td>
+                    <td style="width: 110px;text-align: center">性别</td>
+                    <td style="width: 110px;text-align: center">年龄</td>
+                    <td style="width: 110px;text-align: center">电话号码</td>
+                    <td style="width: 110px;text-align: center">操作</td>
+                </tr>
+                <tr>
+                    <td style="width: 110px;height: 30px;">{{ dnum }}</td>
+                    <td style="width: 110px;height: 30px;"><input name="doc_name" value={{doc_name2 }} style="width: 110px;height: 30px"/></td>
+                    <td style="width: 110px;height: 30px;"><input name="doc_sex" value={{doc_sex2 }} type="text" style="width: 110px;height: 30px"/></td>
+                    <td style="width: 110px;height: 30px;"><input name="doc_age" value={{doc_age2 }} type="text" style="width: 110px;height: 30px"/></td>
+                    <td style="width: 110px;height: 30px;"><input name="doc_phone" value={{doc_phone2 }} type="text" style="width: 110px;height: 30px"/></td>
+                    <td style="width: 110px;height: 30px;"><input type="submit" value="提交修改" onclick="save()" style="width: 110px;height: 40px"/></td>
+                </tr>
+            </table>
+        </form>
+        <div id="data8" style="width: 100%;margin-top: 30px">
+            <table style="width: 80%;margin-left: 88px;background:lightseagreen;">
+                <caption>修改前的学生成绩</caption>
+                <tr>
+                    <td style="width: 87px;text-align: center">编号</td>
+                    <td style="width: 87px;text-align: center">医生姓名</td>
+                    <td style="width: 87px;text-align: center">性别</td>
+                    <td style="width: 87px;text-align: center">年龄</td>
+                    <td style="width: 87px;text-align: center">电话号码</td>
+                </tr>
+                            {% for items in doc_list_new %}
+                                <tr>
+                                    {% for item in items %}
+                                        <td style="width: 87px;text-align: center">{{ item }}</td>
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

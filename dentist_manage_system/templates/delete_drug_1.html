@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/static/image/icon.png">
+
+    <title>删除药品信息确认</title>
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/index_1/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript">
+        function save() {
+            alert('删除药品信息成功！')
+        }
+    </script>
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">牙医诊所管理系统</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">牙医诊所管理系统</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                {% if "username" not in session %}
+                <li><a href="/login">登录</a></li>
+                {% else %}
+                <li style="text-align: center;color: #da9628;padding: 15px 0 15px 15px">欢迎{{ session['username']
+                    }}用户登录！
+                </li>
+
+                <li><a href="/logout">退出</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div style="background-color: #b3b7bb;height: 1100px;width: 150px; " class="col-sm-3 col-md-2 sidebar">
+            <ul style="padding-top: 55px" class="nav nav-sidebar">
+                <li><a style="font-weight: bolder" href="/index">首页</a></li>
+                <li><a style="font-weight: bolder" href="/select_doctors">医生管理</a></li>
+                <li><a style="font-weight: bolder" href="/select_patients">患者管理</a></li>
+                <li><a style="font-weight: bolder" href="/select_drug">药品管理</a></li>
+                <li><a style="font-weight: bolder" href="/select_report">账单管理</a></li>
+                <li><a style="font-weight: bolder" href="/select_members">会员管理</a></li>
+                <li><a style="font-weight: bolder" href="#">待定</a></li>
+            </ul>
+        </div>
+        <div style="width: 1747px;height: 1100px;margin-left: 0; padding-top: 50px;background-image: url(/static/image/beiji.png)"
+             class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <!--          <h2 class="sub-header">Section title</h2>-->
+                <div id="data8" style="width: 100%;margin-top: 30px">
+                    <table class="table table-bordered table-hover warning"
+                           style="width: 80%;margin-left: 88px;background:#64909E;">
+                        <caption>药品信息</caption>
+                        <tr>
+                            <td style="width: 87px;text-align: center;background-color: #27a9e3;border: 1px solid #333333;">
+                                药品编号
+                            </td>
+                            <td style="width: 87px;text-align: center;background-color: #27a9e3;border: 1px solid #333333;">
+                                药品名称
+                            </td>
+                            <td style="width: 87px;text-align: center;background-color: #27a9e3;border: 1px solid #333333;">
+                                药品描述
+                            </td>
+                            <td style="width: 87px;text-align: center;background-color: #27a9e3;border: 1px solid #333333;">
+                                药品价格
+                            </td>
+                            <td style="width: 87px;text-align: center;background-color: #27a9e3;border: 1px solid #333333;">
+                                药品库存
+                            </td>
+                        </tr>
+                        {% for items in drug_list_new %}
+                        <tr>
+                            {% for item in items %}
+                            <td style="width: 87px;text-align: center;border: 1px solid #333333;">{{ item }}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                    <form action="" method="post">
+                        <div style="margin-left: 88px;">
+                        <tr>
+                            <td>
+                                <input type="submit" value="确认删除" name="yes" onclick="save()"
+                                       style="width: 80px;height: 30px;"/>
+                            </td>
+                            <td>
+                                <input type="submit" value="取消删除" name="no"
+                                       style="width: 80px;height: 30px"/>
+                            </td>
+                        </tr>
+                        </div>
+                    </form>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/static/js/index_1/jquery.min.js"></script>
+<script src="/static/js/index_1/bootstrap.min.js"></script>
+</body>
+</html>
