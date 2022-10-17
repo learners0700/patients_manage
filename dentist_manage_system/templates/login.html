@@ -1,7 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/static/image/icon.png">
+<!--    <link rel="canonical" href="https://getbootstrap.com/docs/3.4/examples/dashboard/">-->
+
+    <title>医生管理</title>
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/index_1/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             width: 1280px;
@@ -25,6 +36,10 @@
         border-style: solid;
         border-width: thin;
         border-color: black;
+    }
+
+    #login label {
+        width:800px
     }
 
     #login input {
@@ -63,6 +78,13 @@
             </label>
         </div>
         <input type="submit" value="登录" style="width: 75%;margin-left: 50px">
+        <div>
+            <hr>
+            {% if "username" is not in session %}
+               <p>{{ resultmsg }}</p>
+            {% else %}
+            {% endif %}
+        </div>
     </form>
 </div>
 </body>
