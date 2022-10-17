@@ -171,7 +171,7 @@ def select_drug():
         drug_list = db.Drug('',pname,'','','','').select_drug()
         return render_template('select_drug_1.html',drug_list=drug_list)
 
-# 修改药品
+# 修改药品,修改药品数据
 @app.route('/update_drug/<items>', methods=['POST','GET'])
 def update_drug(items):
     items = items.replace('(','').replace("'","").replace(')','').replace(' ','').replace('[','').replace(']','').split(',')
