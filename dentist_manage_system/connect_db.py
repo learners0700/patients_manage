@@ -434,6 +434,30 @@ class Member:
         Dbsql(sql).exp_sql()
         db.close()
 
+    def delete_member(self):
+        sql = f"""
+            delete from member where pnum = '{self.pnum}';
+        """
+        Dbsql(sql).exp_sql()
+        db.close()
+
+    # 查询余额
+    def select_free_money(self):
+        sql = f"""
+            select free_money from member where pnum = '{self.pnum}';
+        """
+        result = Dbsql(sql).select_sql()
+        db.close()
+        return result
+
+    # 会员充值
+    def member_charge(self):
+        sql = f"""
+            update member set free_money = free_money + {self.free_money} where pnum = '{self.pnum}';
+        """
+        Dbsql(sql).exp_sql()
+        db.close()
+
     # # ping()使用该方法 ping(reconnect=True) ，那么可以在每次连接之前，会检查当前连接是否已关闭，如果连接关闭则会重新进行连接。
     # db.ping(reconnect=True)
     # # 查询sql语句

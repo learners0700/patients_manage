@@ -435,6 +435,7 @@ def delete_patient(items):
         no = request.form.get('no')
         if yes == '确认删除':
             db.Patient('', pnum, '', '', '', '', '', '', '').delete_patient()
+            db.Member(pnum,"", "", "", "", '').delete_member()
             return redirect(url_for('select_patients'))
         if no == '取消删除':
             return redirect('/select_patients')
@@ -468,5 +469,32 @@ def create_member(items):
         else:
             return redirect('/select_patients')
 
+
+# 会员充值
+@app.route('/member_charge/<items>',methods=['POST','GET'])
+def member_charge(items):
+    items = items.replace('(', '').replace("'", "").replace(')', '').replace(' ', '').replace('[', '').replace(']',
+                                                                                                                   '').split(
+            ',')
+    p_num = items[1]
+    p_name = items[2]
+    memtype = items[5]
+    free_money = db.Member(p_num,'','','','','').select_free_money()
+    if free_money:
+        free_money = free_money[0][0]
+        if request.method == 'GET':
+            if memtype != '非会员':
+                resultmsg = '会员卡充值成功！'
+                return render_template('member_charge.html',p_num=p_num,p_name=p_name,memtype=memtype,free_money=free_money,
+                                       resultmsg=resultmsg)
+            else:
+                return redirect('/select_patients')
+    else:
+        return redirect('/select_patients')
+
+    if request.method == 'POST':
+        add_money = request.form.get('add_money')
+        db.Member(p_num,'',add_money,'','','').member_charge()
+        return redirect('/select_patients')
 if __name__ == '__main__':
     app.run()
