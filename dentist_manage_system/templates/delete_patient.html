@@ -51,17 +51,31 @@
 
 <div class="container-fluid">
     <div class="row">
+        {% if "username" in session %}
         <div style="background-color: #b3b7bb;height: 1100px;width: 150px; " class="col-sm-3 col-md-2 sidebar">
             <ul style="padding-top: 55px" class="nav nav-sidebar">
-                <li><a style="font-weight: bolder" href="/index">首页</a></li>
-                <li><a style="font-weight: bolder" href="/select_doctors">医生管理</a></li>
-                <li><a style="font-weight: bolder" href="/select_patients">患者管理</a></li>
-                <li><a style="font-weight: bolder" href="/select_drug">药品管理</a></li>
-                <li><a style="font-weight: bolder" href="/select_report">账单管理</a></li>
-                <li><a style="font-weight: bolder" href="/select_members">会员管理</a></li>
-                <li><a style="font-weight: bolder" href="#">待定</a></li>
+                <li><a  style="font-weight: bolder" href="/index">首页</a></li>
+                <li><a  style="font-weight: bolder" href="/select_doctors">医生管理</a></li>
+                <li><a  style="font-weight: bolder" href="/select_patients">患者管理</a></li>
+                <li><a  style="font-weight: bolder" href="/select_drug">药品管理</a></li>
+                <li><a  style="font-weight: bolder" href="/select_report">账单管理</a></li>
+                <li><a  style="font-weight: bolder" href="/select_members">会员管理</a></li>
+                <li><a  style="font-weight: bolder" href="/select_drugname">待定</a></li>
             </ul>
         </div>
+        {% else %}
+                <div style="background-color: #b3b7bb;height: 1100px;width: 150px; " class="col-sm-3 col-md-2 sidebar">
+            <ul style="padding-top: 55px" class="nav nav-sidebar">
+                <li><a  style="font-weight: bolder" href="/index">首页</a></li>
+                <li><a  style="font-weight: bolder" href="/index">医生管理</a></li>
+                <li><a  style="font-weight: bolder" href="/index">患者管理</a></li>
+                <li><a  style="font-weight: bolder" href="/index">药品管理</a></li>
+                <li><a  style="font-weight: bolder" href="/index">账单管理</a></li>
+                <li><a  style="font-weight: bolder" href="/index">会员管理</a></li>
+                <li><a  style="font-weight: bolder" href="/index">待定</a></li>
+            </ul>
+        </div>
+        {% endif %}
         <div style="width: 1747px;height: 1100px;margin-left: 0; padding-top: 50px;background-image: url(/static/image/beiji.png)"
              class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <!--          <h2 class="sub-header">Section title</h2>-->
