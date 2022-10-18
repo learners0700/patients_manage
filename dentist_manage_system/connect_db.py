@@ -240,7 +240,7 @@ class Patient:
     # 分页查询
     def select_patient_page(self):
         sql = f"""
-            select * from patients limit {self.page},20;
+            select a.id,a.pnum,a.pname,a.psex,a.page,(case when b.type is null then '非会员' else b.type end) as type,a.phone,a.addr from patients a left outer join member b on a.pnum = b.pnum limit {self.page},20;
         """
         result = Dbsql(sql).select_sql()
         db.close()
@@ -249,7 +249,7 @@ class Patient:
     # 根据患者编号查询
     def select_patient_one(self):
         sql = f"""
-            select * from patients where pnum = '{self.pnum}';
+            select a.id,a.pnum,a.pname,a.psex,a.page,(case when b.type is null then '非会员' else b.type end) as type,a.phone,a.addr from patients a left outer join member b on a.pnum = b.pnum where a.pnum = '{self.pnum}';
         """
         result = Dbsql(sql).select_sql()
         db.close()
@@ -420,19 +420,26 @@ class Redis:
 
 
 # 查询会员信息
-def select_member(name):
-    # 插入sql语句
-    sql = f"""
-        select t1.pname,t2.care_number,t2.free_money from patients t1, member t2 
-        where t1.pnum = t2.pnum
-        and t1.pname = '{name}';
-    """
-    # ping()使用该方法 ping(reconnect=True) ，那么可以在每次连接之前，会检查当前连接是否已关闭，如果连接关闭则会重新进行连接。
-    db.ping(reconnect=True)
-    # 查询sql语句
-    # cursor对象，pymysql.cursors.DictCursor 返回字典格式
-    cursor = db.cursor(pymysql.cursors.DictCursor)
-    cursor.execute(sql)
-    return cursor.fetchall()
+class Member:
+    def __init__(self,pnum,type,free_money,update_time,care_number,page):
+        self.pnum = pnum
+        self.type = type
+        self.free_money = free_money
+        self.update_time = update_time
+        self.care_number = care_number
+        self.page = page
+    def create_member(self):
+        sql1 = "insert into member(pnum, type, free_money,update_time,care_number) value (%s,%s,%s,%s,%s)"
+        sql = sql1 % (repr(self.pnum), repr(self.type), repr(self.free_money),repr(self.update_time),repr(self.care_number))
+        Dbsql(sql).exp_sql()
+        db.close()
+
+    # # ping()使用该方法 ping(reconnect=True) ，那么可以在每次连接之前，会检查当前连接是否已关闭，如果连接关闭则会重新进行连接。
+    # db.ping(reconnect=True)
+    # # 查询sql语句
+    # # cursor对象，pymysql.cursors.DictCursor 返回字典格式
+    # cursor = db.cursor(pymysql.cursors.DictCursor)
+    # cursor.execute(sql)
+    # return cursor.fetchall()
 
 

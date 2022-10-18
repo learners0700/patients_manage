@@ -329,7 +329,7 @@ def add_patient():
         pname = request.form.get('pname')
         psex = request.form.get('psex')
         page = request.form.get('page')
-        member_type = request.form.get('member_type')
+        member_type = '非会员'
         phone = request.form.get('phone')
         paddr = request.form.get('paddr')
         db.Patient('',p_num,pname,psex,page,member_type,phone,paddr,'').add_patient()
@@ -440,6 +440,33 @@ def delete_patient(items):
             return redirect('/select_patients')
 
 
+# 新增会员信息
+@app.route('/create_member/<items>',methods=['POST','GET'])
+def create_member(items):
+    items = items.replace('(', '').replace("'", "").replace(')', '').replace(' ', '').replace('[', '').replace(']',
+                                                                                                                   '').split(
+            ',')
+    p_num = items[1]
+    p_name = items[2]
+    memtype = items[5]
+    create_time = time.strftime('%Y-%m-%d %H:%M:%S')
+    if request.method == 'GET':
+        if memtype != '非会员':
+            resultmsg = '办理会员失败，会员已经存在，请选择修改或者充值！'
+            return render_template('create_member.html',resultmsg=resultmsg,p_num=p_num,p_name=p_name
+                                   ,create_time=create_time)
+        else:
+            resultmsg = '办理会员成功'
+            return render_template('create_member.html', resultmsg=resultmsg, p_num=p_num, p_name=p_name
+                                   , create_time=create_time)
+    if request.method == 'POST':
+        free_money = request.form.get('free_money')
+        mem_type = request.form.get('memtype')
+        if memtype == '非会员':
+            db.Member(p_num,mem_type,free_money,create_time,p_num,'').create_member()
+            return redirect('/select_patients')
+        else:
+            return redirect('/select_patients')
 
 if __name__ == '__main__':
     app.run()
