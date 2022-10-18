@@ -147,14 +147,18 @@
                     {% for items in patient_list %}
                     <tr>
                         {% for item in items %}
-                        <td style="border: 1px solid #333333;padding: 10px;width: auto;text-align: center;background-color: #64909E">
-                            {{ item }}
+                        <td style="border: 1px solid #333333;padding: 10px;width: auto;height:auto ;text-align: center;background-color: #64909E">
+                           <p>{{ item }}</p>
                         </td>
                         {% endfor %}
                         <td style="border: 1px solid #333333;padding: 10px;width: auto;text-align: center;background-color: #64909E">
                             <a style="color: blue;" href="/update_patient/{{ items }}">修改</a>
                             <a style="color: blue; padding-left: 8px" href="/delete_patient/{{ items }}">删除</a>
-                            <a style="color: blue; padding-left: 8px" href="/create_prescription/{{ items }}">开处方</a>
+                            <a style="color: blue; padding-left: 8px" href="/create_member/{{ items }}">办理会员</a>
+                            <a style="color: blue; padding-left: 8px" href="/member_charge/{{ items }}">&nbsp;&nbsp;会员充值</a>
+                            <a style="color: blue; padding-left: 8px" href="/show_prescription/{{ items }}">查看处方</a>
+                            <a style="color: blue; padding-left: 8px" href="/create_prescription/{{ items }}">&nbsp;开处方</a>
+
                         </td>
                     </tr>
                     {% endfor %}

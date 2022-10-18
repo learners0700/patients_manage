@@ -10,7 +10,6 @@
     <option name="TEMPLATE_FOLDERS">
       <list>
         <option value="$MODULE_DIR$/dentist_manage_system/templates" />
-        <option value="$MODULE_DIR$/dentist_manage_system/static" />
       </list>
     </option>
   </component>

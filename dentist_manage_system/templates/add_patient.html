@@ -36,13 +36,13 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 {% if "username" not in session %}
-                <li><a href="/login">登录</a></li>
+                    <li><a href="/login">登录</a></li>
                 {% else %}
-                <li style="text-align: center;color: #da9628;padding: 15px 0 15px 15px">欢迎{{ session['username']
-                    }}用户登录！
-                </li>
+                    <li style="text-align: center;color: #da9628;padding: 15px 0 15px 15px">
+                        欢迎{{ session['username'] }}用户登录！
+                    </li>
 
-                <li><a href="/logout">退出</a></li>
+                    <li><a href="/logout">退出</a></li>
                 {% endif %}
             </ul>
         </div>
@@ -52,29 +52,29 @@
 <div class="container-fluid">
     <div class="row">
         {% if "username" in session %}
-        <div style="background-color: #b3b7bb;height: 1100px;width: 150px; " class="col-sm-3 col-md-2 sidebar">
-            <ul style="padding-top: 55px" class="nav nav-sidebar">
-                <li><a  style="font-weight: bolder" href="/index">首页</a></li>
-                <li><a  style="font-weight: bolder" href="/select_doctors">医生管理</a></li>
-                <li><a  style="font-weight: bolder" href="/select_patients">患者管理</a></li>
-                <li><a  style="font-weight: bolder" href="/select_drug">药品管理</a></li>
-                <li><a  style="font-weight: bolder" href="/select_report">账单管理</a></li>
-                <li><a  style="font-weight: bolder" href="/select_members">会员管理</a></li>
-                <li><a  style="font-weight: bolder" href="/select_drugname">待定</a></li>
-            </ul>
-        </div>
+            <div style="background-color: #b3b7bb;height: 1100px;width: 150px; " class="col-sm-3 col-md-2 sidebar">
+                <ul style="padding-top: 55px" class="nav nav-sidebar">
+                    <li><a style="font-weight: bolder" href="/index">首页</a></li>
+                    <li><a style="font-weight: bolder" href="/select_doctors">医生管理</a></li>
+                    <li><a style="font-weight: bolder" href="/select_patients">患者管理</a></li>
+                    <li><a style="font-weight: bolder" href="/select_drug">药品管理</a></li>
+                    <li><a style="font-weight: bolder" href="/select_report">账单管理</a></li>
+                    <li><a style="font-weight: bolder" href="/select_members">会员管理</a></li>
+                    <li><a style="font-weight: bolder" href="/select_drugname">待定</a></li>
+                </ul>
+            </div>
         {% else %}
-                <div style="background-color: #b3b7bb;height: 1100px;width: 150px; " class="col-sm-3 col-md-2 sidebar">
-            <ul style="padding-top: 55px" class="nav nav-sidebar">
-                <li><a  style="font-weight: bolder" href="/index">首页</a></li>
-                <li><a  style="font-weight: bolder" href="/index">医生管理</a></li>
-                <li><a  style="font-weight: bolder" href="/index">患者管理</a></li>
-                <li><a  style="font-weight: bolder" href="/index">药品管理</a></li>
-                <li><a  style="font-weight: bolder" href="/index">账单管理</a></li>
-                <li><a  style="font-weight: bolder" href="/index">会员管理</a></li>
-                <li><a  style="font-weight: bolder" href="/index">待定</a></li>
-            </ul>
-        </div>
+            <div style="background-color: #b3b7bb;height: 1100px;width: 150px; " class="col-sm-3 col-md-2 sidebar">
+                <ul style="padding-top: 55px" class="nav nav-sidebar">
+                    <li><a style="font-weight: bolder" href="/index">首页</a></li>
+                    <li><a style="font-weight: bolder" href="/index">医生管理</a></li>
+                    <li><a style="font-weight: bolder" href="/index">患者管理</a></li>
+                    <li><a style="font-weight: bolder" href="/index">药品管理</a></li>
+                    <li><a style="font-weight: bolder" href="/index">账单管理</a></li>
+                    <li><a style="font-weight: bolder" href="/index">会员管理</a></li>
+                    <li><a style="font-weight: bolder" href="/index">待定</a></li>
+                </ul>
+            </div>
         {% endif %}
         <div style="width: 1747px;height: 1100px;margin-left: 0; padding-top: 50px;background-image: url(/static/image/beiji.png)"
              class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -103,17 +103,22 @@
                                     <input name="pname" placeholder="请输入患者姓名" style="width: 150px;height: 30px"/>
                                 </td>
                                 <td>
-                                    <input name="psex" placeholder='请输入性别' style="width: 150px;height: 30px"/>
+                                    <select name="psex" style="height: 30px;width: 80px">
+                                        <option value="男">男</option>
+                                        <option value="女">女</option>
+                                    </select>
+                                    {#                                    <input name="psex" placeholder='请输入性别' style="width: 150px;height: 30px"/>#}
                                 </td>
                                 <td>
                                     <input name="page" placeholder='请输入年龄' style="width: 150px;height: 30px"/>
                                 </td>
                                 <td>
-                                    <select name="member_type">
-                                        <option  value="金卡会员">金卡会员</option>
-                                        <option  value="银卡会员">银卡会员</option>
-                                        <option  value="钻石会员">钻石会员</option>
-                                        <option  value="非会员">非会员</option>
+                                    <select name="member_type" style="height: 30px;">
+                                        <option value="非会员">非会员</option>
+                                        <option value="金卡会员">金卡会员</option>
+                                        <option value="银卡会员">银卡会员</option>
+                                        <option value="钻石会员">钻石会员</option>
+
                                     </select>
                                 </td>
                                 <td>
