@@ -25,7 +25,7 @@ def login():
             return redirect('/index')
         else:
             resultmsg = "用户名密或码错误"
-            return render_template('login.html',resultmsg=resultmsg)
+            return render_template('login.html',resultmsg=resultmsg,abc=resultmsg)
 
 @app.route('/index')
 def main_index():
