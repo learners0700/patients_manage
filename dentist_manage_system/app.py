@@ -496,5 +496,33 @@ def member_charge(items):
         add_money = request.form.get('add_money')
         db.Member(p_num,'',add_money,'','','').member_charge()
         return redirect('/select_patients')
+
+# 展示会员信息
+@app.route('/show_member/<items>',methods=['POST','GET'])
+def show_member(items):
+    items = items.replace('(', '').replace("'", "").replace(')', '').replace(' ', '').replace('[', '').replace(']',
+                                                                                                                   '').split(
+            ',')
+    if request.method == 'GET':
+        p_num = items[1]
+        member_list = db.Member(p_num,'','','','','').select_member_one()
+        return render_template('show_member.html',member_list=member_list)
+
+# 展示单个患者账单
+@app.route('/show_prescription/<items>',methods=['POST','GET'])
+def show_prescription(items):
+    items = items.replace('(', '').replace("'", "").replace(')', '').replace(' ', '').replace('[', '').replace(']',
+                                                                                                                   '').split(
+            ',')
+    p_num = items[1]
+    p_name = items[2]
+    memtype = items[5]
+    if request.method == 'GET':
+        prescription_list = db.Report(p_num,'','','','','','','').select_prescription_one()
+        all_money = db.Report(p_num,'','','','','','','').select_prescription_one_money()
+        all_money = f'{all_money[0][0]}元'
+        return render_template('show_prescription.html',p_num=p_num,p_name=p_name,memtype=memtype,prescription_list=prescription_list,all_money=all_money)
+
+
 if __name__ == '__main__':
     app.run()

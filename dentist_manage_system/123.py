@@ -1,14 +1,14 @@
-# import time
-# localtime = time.strftime('%Y-%m-%d %H:%M:%S')
-#
-# print(localtime)
-# print(time.strftime('%Y-%m-%d %H:%M:%S'))
-# # t=time.ctime()
-# # print(time.strftime("%Y-%m-%d %H:%M:%S",t))
+import  pandas as pd
+import connect_db as db
 
-
-a = (('阿莫西林', '1'), ('阿莫西林', '1'))
-for i in a:
-    print(f"name={i[0]}")
-
-
+# sql = "select dname,ddec,money,count,money*count as all_money from report where pnum = '1';"
+# df = pd.read_sql(sql,db.db)
+# print(df)
+# df = df.groupby(["dname","money","ddec"],as_index=False).sum()
+# print(df)
+pnum = '1665736808094113'
+result = db.Report(pnum,'','','','','','','').select_prescription_one()
+for items in result:
+    for item in items:
+        print(item)
+print(result)

@@ -309,7 +309,7 @@ class Patient:
 
 # 操作单
 class Report:
-    def __init__(self,pnum,pname,phone,dname,money,ddec,count,create_time):
+    def __init__(self,pnum,pname,phone,dname,money,ddec,count,create_time,page=0):
         self.pnum = pnum
         self.pname = pname
         self.phone = phone
@@ -318,6 +318,7 @@ class Report:
         self.ddec = ddec
         self.count = count
         self.create_time = create_time
+        self.page = page
 
     # 开处方单添加到报表
     def create_prescription(self):
@@ -356,8 +357,28 @@ class Report:
         db.close()
         return result
 
-# d = Report(1,'','','','','','',localtime)
-# print(d.select_prescription())
+    # 患者页面查看单个患者的处方单
+    def select_prescription_one(self):
+        sql = f"""
+            select dname,money,ddec,sum(count) as count,sum(all_money) as all_money from 
+                (select dname,money,ddec,count,money*count as all_money from report where pnum = '{self.pnum}') a 
+                group by dname,money,ddec;
+        """
+        result = Dbsql(sql).select_sql()
+        db.close()
+        return result
+
+    # 患者页面查看单个患者的处方单总金额
+    def select_prescription_one_money(self):
+        sql = f"""
+            select sum(money*count) as all_money from report where pnum = '{self.pnum}'
+        """
+        result = Dbsql(sql).select_sql()
+        db.close()
+        return result
+
+
+
 
 class Redis:
     def __init__(self,pnum,times,dname,dfree=0):
@@ -419,6 +440,7 @@ class Redis:
 
 
 
+
 # 查询会员信息
 class Member:
     def __init__(self,pnum,type,free_money,update_time,care_number,page):
@@ -457,6 +479,18 @@ class Member:
         """
         Dbsql(sql).exp_sql()
         db.close()
+
+    # 患者界面查询某个会员信息
+    def select_member_one(self):
+        sql = f"""
+            select a.care_number, b.pname, a.type, a.free_money from member a , patients b
+             where a.pnum = b.pnum
+             and a.pnum = '{self.pnum}';
+        """
+        result = Dbsql(sql).select_sql()
+        db.close()
+        return result
+
 
     # # ping()使用该方法 ping(reconnect=True) ，那么可以在每次连接之前，会检查当前连接是否已关闭，如果连接关闭则会重新进行连接。
     # db.ping(reconnect=True)
