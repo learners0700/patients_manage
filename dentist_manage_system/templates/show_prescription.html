@@ -59,13 +59,13 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 {% if "username" not in session %}
-                <li><a href="/login">登录</a></li>
+                    <li><a href="/login">登录</a></li>
                 {% else %}
-                <li style="text-align: center;color: #da9628;padding: 15px 0 15px 15px">欢迎{{ session['username']
-                    }}用户登录！
-                </li>
+                    <li style="text-align: center;color: #da9628;padding: 15px 0 15px 15px">
+                        欢迎{{ session['username'] }}用户登录！
+                    </li>
 
-                <li><a href="/logout">退出</a></li>
+                    <li><a href="/logout">退出</a></li>
                 {% endif %}
             </ul>
         </div>
@@ -75,33 +75,34 @@
 <div class="container-fluid">
     <div class="row">
         {% if "username" in session %}
-        <div style="background-color: #b3b7bb;height: 1100px;width: 150px; " class="col-sm-3 col-md-2 sidebar">
-            <ul style="padding-top: 55px" class="nav nav-sidebar">
-                <li><a  style="font-weight: bolder" href="/index">首页</a></li>
-                <li><a  style="font-weight: bolder" href="/select_doctors">医生管理</a></li>
-                <li><a  style="font-weight: bolder" href="/select_patients">患者管理</a></li>
-                <li><a  style="font-weight: bolder" href="/select_drug">药品管理</a></li>
-                <li><a  style="font-weight: bolder" href="/select_report">账单管理</a></li>
-                <li><a  style="font-weight: bolder" href="/select_members">会员管理</a></li>
-                <li><a  style="font-weight: bolder" href="/select_drugname">待定</a></li>
-            </ul>
-        </div>
+            <div style="background-color: #b3b7bb;height: 1100px;width: 150px; " class="col-sm-3 col-md-2 sidebar">
+                <ul style="padding-top: 55px" class="nav nav-sidebar">
+                    <li><a style="font-weight: bolder" href="/index">首页</a></li>
+                    <li><a style="font-weight: bolder" href="/select_doctors">医生管理</a></li>
+                    <li><a style="font-weight: bolder" href="/select_patients">患者管理</a></li>
+                    <li><a style="font-weight: bolder" href="/select_drug">药品管理</a></li>
+                    <li><a style="font-weight: bolder" href="/select_report">账单管理</a></li>
+                    <li><a style="font-weight: bolder" href="/select_members">会员管理</a></li>
+                    <li><a style="font-weight: bolder" href="/select_drugname">待定</a></li>
+                </ul>
+            </div>
         {% else %}
-                <div style="background-color: #b3b7bb;height: 1100px;width: 150px; " class="col-sm-3 col-md-2 sidebar">
-            <ul style="padding-top: 55px" class="nav nav-sidebar">
-                <li><a  style="font-weight: bolder" href="/index">首页</a></li>
-                <li><a  style="font-weight: bolder" href="/index">医生管理</a></li>
-                <li><a  style="font-weight: bolder" href="/index">患者管理</a></li>
-                <li><a  style="font-weight: bolder" href="/index">药品管理</a></li>
-                <li><a  style="font-weight: bolder" href="/index">账单管理</a></li>
-                <li><a  style="font-weight: bolder" href="/index">会员管理</a></li>
-                <li><a  style="font-weight: bolder" href="/index">待定</a></li>
-            </ul>
-        </div>
+            <div style="background-color: #b3b7bb;height: 1100px;width: 150px; " class="col-sm-3 col-md-2 sidebar">
+                <ul style="padding-top: 55px" class="nav nav-sidebar">
+                    <li><a style="font-weight: bolder" href="/index">首页</a></li>
+                    <li><a style="font-weight: bolder" href="/index">医生管理</a></li>
+                    <li><a style="font-weight: bolder" href="/index">患者管理</a></li>
+                    <li><a style="font-weight: bolder" href="/index">药品管理</a></li>
+                    <li><a style="font-weight: bolder" href="/index">账单管理</a></li>
+                    <li><a style="font-weight: bolder" href="/index">会员管理</a></li>
+                    <li><a style="font-weight: bolder" href="/index">待定</a></li>
+                </ul>
+            </div>
         {% endif %}
         <div style="width: 1747px;height: 1100px;margin-left: 0; padding-top: 50px;background-image: url(/static/image/beiji.png)"
              class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <!--          <h2 class="sub-header">Section title</h2>-->
+
             <div class="table-responsive">
                 <table class="table table-bordered table-hover">
                     <thead>
@@ -124,43 +125,64 @@
                     </tr>
                     </thead>
                     <tbody>
+                    {% for prescription_list in prescription_list_all %}
                         <tr>
-                            <td style="border: 1px solid #333333;padding: 10px;width: 145px;height:auto ;text-align: center;background-color: #64909E">
-                                {{ p_num }}
-                            </td>
-                            <td style="border: 1px solid #333333;padding: 10px;width: 146px;height:auto ;text-align: center;background-color: #64909E">
-                                {{ p_name }}
-                            </td>
-                            <td style="border: 1px solid #333333;padding: 10px;width: 146px;height:auto ;text-align: center;background-color: #64909E">
-                                {{ memtype }}
-                            </td>
-                            <td style="border: 1px solid #333333;padding: 10px;width: 1110px;height:auto ;text-align: center;background-color: #64909E">
-                                <table class="table table-bordered table-hover">
-                                    <thead>
-                                    <tr>
-                                        <td style="border: 1px solid #333333;padding: 10px;width: auto;height:auto ;text-align: center;background-color: #da9628">药品名称</td>
-                                        <td style="border: 1px solid #333333;padding: 10px;width: auto;height:auto ;text-align: center;background-color: #da9628">单价</td>
-                                        <td style="border: 1px solid #333333;padding: 10px;width: auto;height:auto ;text-align: center;background-color: #da9628">用处</td>
-                                        <td style="border: 1px solid #333333;padding: 10px;width: auto;height:auto ;text-align: center;background-color: #da9628">个数</td>
-                                        <td style="border: 1px solid #333333;padding: 10px;width: auto;height:auto ;text-align: center;background-color: #da9628">总价</td>
-                                    </tr>
-                                    </thead>
-                                    <tbody style="height: auto">
-                                    {% for items in prescription_list %}
+                        <td style="border: 1px solid #333333;padding: 10px;width: 145px;height:auto ;text-align: center;background-color: #64909E">
+                            {{ p_num }}
+                        </td>
+                        <td style="border: 1px solid #333333;padding: 10px;width: 146px;height:auto ;text-align: center;background-color: #64909E">
+                            {{ p_name }}
+                        </td>
+                        <td style="border: 1px solid #333333;padding: 10px;width: 146px;height:auto ;text-align: center;background-color: #64909E">
+                            {{ memtype }}
+                        </td>
+                        <td style="border: 1px solid #333333;padding: 10px;width: 1110px;height:auto ;text-align: center;background-color: #64909E">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <td style="border: 1px solid #333333;padding: 10px;width: auto;height:auto ;text-align: center;background-color: #da9628">
+                                        药品名称
+                                    </td>
+                                    <td style="border: 1px solid #333333;padding: 10px;width: auto;height:auto ;text-align: center;background-color: #da9628">
+                                        单价
+                                    </td>
+                                    <td style="border: 1px solid #333333;padding: 10px;width: auto;height:auto ;text-align: center;background-color: #da9628">
+                                        用处
+                                    </td>
+                                    <td style="border: 1px solid #333333;padding: 10px;width: auto;height:auto ;text-align: center;background-color: #da9628">
+                                        个数
+                                    </td>
+                                    <td style="border: 1px solid #333333;padding: 10px;width: auto;height:auto ;text-align: center;background-color: #da9628">
+                                        总价
+                                    </td>
+                                </tr>
+                                </thead>
+                                <tbody style="height: auto">
+                                {% for items in prescription_list %}
                                     <tr>
                                         {% for item in items %}
-                                        <td style="border: 1px solid #333333;padding: 10px;width: 10px;height:auto ;text-align: center;background-color: #64909E">{{ item }}</td>
+                                            <td style="border: 1px solid #333333;padding: 10px;width: 10px;height:auto ;text-align: center;background-color: #64909E">{{ item }}</td>
                                         {% endfor %}
                                     </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
-                            </td>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </td>
+                        {% if prescription_list[0] in set_num %}
+                            {{ all_money == all_money_list[0] }}
                             <td style="border: 1px solid #333333;padding: 10px;width: auto;height:auto ;text-align: center;background-color: #64909E">
                                 {{ all_money }}
                             </td>
-                        </tr>
+                        {% else %}
+                            <td style="border: 1px solid #333333;padding: 10px;width: auto;height:auto ;text-align: center;background-color: #64909E">
+                                {{ all_money_list }}
+                            </td>
+                        {% endif %}
+                    {% endfor %}
+                    </tr>
+
                     </tbody>
+
                 </table>
             </div>
         </div>

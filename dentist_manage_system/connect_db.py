@@ -309,7 +309,7 @@ class Patient:
 
 # 操作单
 class Report:
-    def __init__(self,pnum,pname,phone,dname,money,ddec,count,create_time,page=0):
+    def __init__(self,pnum,pname,phone,dname,money,ddec,count,create_time,page=0,index=0):
         self.pnum = pnum
         self.pname = pname
         self.phone = phone
@@ -319,11 +319,12 @@ class Report:
         self.count = count
         self.create_time = create_time
         self.page = page
+        self.index = index
 
     # 开处方单添加到报表
     def create_prescription(self):
-        sql1 = "insert into report(pnum, pname, phone, dname,money,ddec,count,create_time) values(%s,%s,%s,%s,%s,%s,%s,%s)"
-        sql = sql1 % (repr(self.pnum),repr(self.pname),repr(self.phone),repr(self.dname),repr(self.money),repr(self.ddec),repr(self.count),repr(self.create_time))
+        sql1 = "insert into report(pnum, pname, phone, dname,money,ddec,count,create_time,index_1) values(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        sql = sql1 % (repr(self.pnum),repr(self.pname),repr(self.phone),repr(self.dname),repr(self.money),repr(self.ddec),repr(self.count),repr(self.create_time),repr(self.index))
         # sql = f" insert into report(pnum,create_time) value (2,'{localtime}'); "
         Dbsql(sql).exp_sql()
         db.close()
@@ -334,6 +335,23 @@ class Report:
             delete from report where id = '{self.pnum}';
         """
         Dbsql(sql).exp_sql()
+        db.close()
+
+    # 查询报表单的index，然后提交处方单后+1,用于后面的患者处方单查询
+    def select_report_index(self):
+        sql = f"""
+            SELECT max(index_1) FROM report where pnum = {self.pnum};
+        """
+        result = Dbsql(sql).select_sql()
+        db.close()
+        return result
+
+    # 更新index
+    def update_report_index(self):
+        sql = f"""
+            update report set index_1 = {self.index} where index_1 = '0' and pnum = {self.pnum};
+        """
+        result = Dbsql(sql).exp_sql()
         db.close()
 
     # 根据患者id和时间去查询处方
@@ -360,9 +378,9 @@ class Report:
     # 患者页面查看单个患者的处方单
     def select_prescription_one(self):
         sql = f"""
-            select dname,money,ddec,sum(count) as count,sum(all_money) as all_money from 
-                (select dname,money,ddec,count,money*count as all_money from report where pnum = '{self.pnum}') a 
-                group by dname,money,ddec;
+            select index_1,dname,money,ddec,sum(count) as count,sum(all_money) as all_money from 
+                (select index_1,dname,money,ddec,count,money*count as all_money from report where pnum = '{self.pnum}') a 
+                group by dname,money,ddec,index_1;
         """
         result = Dbsql(sql).select_sql()
         db.close()
@@ -371,7 +389,7 @@ class Report:
     # 患者页面查看单个患者的处方单总金额
     def select_prescription_one_money(self):
         sql = f"""
-            select sum(money*count) as all_money from report where pnum = '{self.pnum}'
+            select sum(money*count) as all_money from report where pnum = '{self.pnum}' and index_1 = '{self.index}'
         """
         result = Dbsql(sql).select_sql()
         db.close()

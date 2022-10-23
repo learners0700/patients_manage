@@ -402,6 +402,12 @@ def truncate_redis(pnumber):
     if result == 1:
         # 清空指定患者的redis
         db.Redis(pnum,'','','').del_redis()
+    # 查询index
+    index_report = db.Report(pnum, '', '', '', '', '', '', '','').select_report_index()
+    index_report = index_report[0][0]
+    set_index = index_report + 1
+    db.Report(pnum, '', '', '', '', '', '', '', '',set_index).update_report_index()
+
 
     return redirect('/select_patients')
 
@@ -519,9 +525,24 @@ def show_prescription(items):
     memtype = items[5]
     if request.method == 'GET':
         prescription_list = db.Report(p_num,'','','','','','','').select_prescription_one()
-        all_money = db.Report(p_num,'','','','','','','').select_prescription_one_money()
-        all_money = f'{all_money[0][0]}元'
-        return render_template('show_prescription.html',p_num=p_num,p_name=p_name,memtype=memtype,prescription_list=prescription_list,all_money=all_money)
+        num_set = set()
+        for num in prescription_list:
+            num_set.add(num[0])
+        prescription_list_all = []
+        for num in num_set:
+            prescription_list_1 = []
+            for i in prescription_list:
+                if i[0] == num:
+                    prescription_list_1.append(i)
+            prescription_list_all.append(prescription_list_1)
+        # 查询总金额
+        all_money_list = []
+        for index in num_set:
+            all_money = db.Report(p_num,'','','','','','','',index=index).select_prescription_one_money()
+            all_money = all_money[0][0]
+            all_money_list.append(all_money)
+        return render_template('show_prescription.html',p_num=p_num,p_name=p_name,memtype=memtype,prescription_list_all=prescription_list_all,all_money_list=all_money_list
+                               )
 
 
 if __name__ == '__main__':
