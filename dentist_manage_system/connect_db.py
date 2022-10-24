@@ -378,9 +378,9 @@ class Report:
     # 患者页面查看单个患者的处方单
     def select_prescription_one(self):
         sql = f"""
-            select index_1,dname,money,ddec,sum(count) as count,sum(all_money) as all_money from 
-                (select index_1,dname,money,ddec,count,money*count as all_money from report where pnum = '{self.pnum}') a 
-                group by dname,money,ddec,index_1;
+            select index_1,dname,money,ddec,create_time,sum(count) as count,sum(all_money) as all_money from 
+                (select index_1,dname,money,ddec,DATE_FORMAT(create_time, '%Y-%m-%d') as create_time,count,money*count as all_money from report where pnum = '{self.pnum}') a 
+                group by dname,money,ddec,index_1,create_time;
         """
         result = Dbsql(sql).select_sql()
         db.close()

@@ -525,6 +525,7 @@ def show_prescription(items):
     memtype = items[5]
     if request.method == 'GET':
         prescription_list = db.Report(p_num,'','','','','','','').select_prescription_one()
+        print(prescription_list)
         num_set = set()
         for num in prescription_list:
             num_set.add(num[0])
@@ -533,8 +534,10 @@ def show_prescription(items):
             prescription_list_1 = []
             for i in prescription_list:
                 if i[0] == num:
-                    prescription_list_1.append(i)
-            prescription_list_all.append(prescription_list_1)
+                    prescription_list_1.append(i[1:])
+            my_tuple = (num,prescription_list_1)
+            prescription_list_all.append(my_tuple)
+        #print(prescription_list_all)
         # 查询总金额
         all_money_list = []
         for index in num_set:
@@ -542,7 +545,7 @@ def show_prescription(items):
             all_money = all_money[0][0]
             all_money_list.append(all_money)
         return render_template('show_prescription.html',p_num=p_num,p_name=p_name,memtype=memtype,prescription_list_all=prescription_list_all,all_money_list=all_money_list
-                               )
+                               ,set_num=list(num_set))
 
 
 if __name__ == '__main__':

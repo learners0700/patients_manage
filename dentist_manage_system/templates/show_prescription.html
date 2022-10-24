@@ -125,7 +125,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for prescription_list in prescription_list_all %}
+                    {% for num,prescription_list in prescription_list_all %}
                         <tr>
                         <td style="border: 1px solid #333333;padding: 10px;width: 145px;height:auto ;text-align: center;background-color: #64909E">
                             {{ p_num }}
@@ -150,6 +150,9 @@
                                         用处
                                     </td>
                                     <td style="border: 1px solid #333333;padding: 10px;width: auto;height:auto ;text-align: center;background-color: #da9628">
+                                        时间
+                                    </td>
+                                    <td style="border: 1px solid #333333;padding: 10px;width: auto;height:auto ;text-align: center;background-color: #da9628">
                                         个数
                                     </td>
                                     <td style="border: 1px solid #333333;padding: 10px;width: auto;height:auto ;text-align: center;background-color: #da9628">
@@ -168,16 +171,9 @@
                                 </tbody>
                             </table>
                         </td>
-                        {% if prescription_list[0] in set_num %}
-                            {{ all_money == all_money_list[0] }}
-                            <td style="border: 1px solid #333333;padding: 10px;width: auto;height:auto ;text-align: center;background-color: #64909E">
-                                {{ all_money }}
-                            </td>
-                        {% else %}
-                            <td style="border: 1px solid #333333;padding: 10px;width: auto;height:auto ;text-align: center;background-color: #64909E">
-                                {{ all_money_list }}
-                            </td>
-                        {% endif %}
+                        <td style="border: 1px solid #333333;padding: 10px;width: auto;height:auto ;text-align: center;background-color: #64909E">
+                            {{ all_money_list[num-1] }}元
+                        </td>
                     {% endfor %}
                     </tr>
 
